@@ -185,14 +185,60 @@
       border: 1px solid rgba(255,255,255,0.15);
     }
     .toast-msg.show { opacity: 1; }
+
+    /* ===== AUTO-REDIRECT COUNTDOWN BADGE ===== */
+    .redirect-badge {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(10, 30, 60, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid #2b6ef0;
+      border-radius: 40px;
+      padding: 10px 22px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #c7e2ff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    .redirect-badge .countdown-number {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      background: #12488b;
+      padding: 0 8px;
+      border-radius: 30px;
+      min-width: 36px;
+      text-align: center;
+    }
+    .redirect-badge .small-text {
+      font-weight: 400;
+      font-size: 0.7rem;
+      color: #88b8ff;
+    }
+
     @media (max-width: 500px) {
       .card { padding: 1.5rem 1.2rem; }
       .channel-name { font-size: 1.6rem; }
       .tele-btn { font-size: 1rem; padding: 0.85rem 1rem; }
+      .redirect-badge { top: 12px; right: 12px; padding: 8px 16px; font-size: 0.75rem; }
     }
   </style>
 </head>
 <body>
+
+<!-- ===== AUTO REDIRECT COUNTDOWN BADGE ===== -->
+<div class="redirect-badge" id="redirectBadge">
+  <span>⏳</span>
+  <span>Redirecting in</span>
+  <span class="countdown-number" id="countdownNumber">5</span>
+  <span class="small-text">sec</span>
+</div>
 
 <div class="card">
   <div class="logo-area">
@@ -245,10 +291,11 @@
 
 <script>
   (function() {
-    // ===== CONFIG — UPDATED WITH NEW PIXEL ID & TELEGRAM LINK =====
-    const TELEGRAM_LINK = "https://t.me/+wEgamWJVYXhjMzZl";   // Telegram channel
-    const PIXEL_ID = "1419071050392080";                       // NEW Pixel ID
+    // ===== CONFIG =====
+    const TELEGRAM_LINK = "https://t.me/+wEgamWJVYXhjMzZl";
+    const PIXEL_ID = "1419071050392080";
     const BRAND_NAME = "PANKAJ_BHARDWAJ";
+    const REDIRECT_DELAY = 5; // seconds
 
     // Toast helper
     function showToast(msg, duration = 1800) {
@@ -273,7 +320,92 @@
       return function() { console.log('Meta Pixel fallback:', arguments); };
     }
 
-    // Track Telegram clicks – fires multiple events
+    // ===== AUTO-REDIRECT WITH COUNTDOWN =====
+    let redirectTimer = null;
+    let redirectCountdown = REDIRECT_DELAY;
+    const countdownEl = document.getElementById('countdownNumber');
+    const badgeEl = document.getElementById('redirectBadge');
+
+    function startAutoRedirect() {
+      // Only start once
+      if (redirectTimer) return;
+
+      // Track auto-redirect start
+      try {
+        const fbqFunc = safeFbq();
+        if (typeof fbqFunc === 'function') {
+          fbqFunc('trackCustom', 'AutoRedirectStarted', {
+            delay_seconds: REDIRECT_DELAY,
+            destination: TELEGRAM_LINK,
+            pixel_id: PIXEL_ID,
+            brand: BRAND_NAME
+          });
+        }
+      } catch (e) { /* ignore */ }
+
+      // Update countdown every second
+      redirectTimer = setInterval(function() {
+        redirectCountdown--;
+        if (countdownEl) countdownEl.textContent = redirectCountdown > 0 ? redirectCountdown : '0';
+
+        // Optional: subtle pulse at 3s and 1s
+        if (redirectCountdown === 3 || redirectCountdown === 1) {
+          if (badgeEl) {
+            badgeEl.style.transform = 'scale(1.08)';
+            badgeEl.style.borderColor = '#60a5fa';
+            setTimeout(() => {
+              if (badgeEl) { badgeEl.style.transform = 'scale(1)'; badgeEl.style.borderColor = '#2b6ef0'; }
+            }, 300);
+          }
+        }
+
+        if (redirectCountdown <= 0) {
+          clearInterval(redirectTimer);
+          redirectTimer = null;
+
+          // Track redirect firing
+          try {
+            const fbqFunc = safeFbq();
+            if (typeof fbqFunc === 'function') {
+              fbqFunc('trackCustom', 'AutoRedirectFired', {
+                delay_seconds: REDIRECT_DELAY,
+                destination: TELEGRAM_LINK,
+                pixel_id: PIXEL_ID,
+                brand: BRAND_NAME
+              });
+              // Also fire Lead for good measure
+              fbqFunc('track', 'Lead', {
+                content_name: `${BRAND_NAME}_AutoRedirect`,
+                content_category: 'Telegram_Invite',
+                method: 'auto_redirect',
+                brand: BRAND_NAME,
+                pixel_id: PIXEL_ID
+              });
+            }
+          } catch (e) { /* ignore */ }
+
+          // Show toast and redirect
+          showToast('🚀 Redirecting to Telegram...', 1500);
+          if (badgeEl) {
+            badgeEl.innerHTML = '<span>✅</span><span>Redirecting now...</span>';
+            badgeEl.style.borderColor = '#22c55e';
+          }
+
+          // Redirect after tiny delay so user sees the message
+          setTimeout(function() {
+            window.location.href = TELEGRAM_LINK;
+          }, 200);
+        }
+      }, 1000);
+    }
+
+    // Start countdown on page load
+    window.addEventListener('load', function() {
+      // Wait a tiny moment to ensure fbq is ready
+      setTimeout(startAutoRedirect, 100);
+    });
+
+    // ===== TELEGRAM CLICK TRACKING =====
     function trackTelegramClick(e) {
       if (this._tracked) return;
       this._tracked = true;
@@ -348,6 +480,18 @@
       } catch (err) {
         console.error('Pixel error (Telegram):', err);
       }
+
+      // If user clicks, cancel auto-redirect to avoid double redirect
+      if (redirectTimer) {
+        clearInterval(redirectTimer);
+        redirectTimer = null;
+        if (badgeEl) {
+          badgeEl.innerHTML = '<span>✅</span><span>Opening Telegram...</span>';
+          badgeEl.style.borderColor = '#22c55e';
+        }
+        showToast('📱 Opening Telegram...', 1200);
+      }
+
       return true;
     }
 
@@ -399,6 +543,7 @@
 
     console.log('🚀 Meta Pixel Active (NEW):', PIXEL_ID);
     console.log('🔗 Telegram Link:', TELEGRAM_LINK);
+    console.log('⏳ Auto-redirect set for', REDIRECT_DELAY, 'seconds');
   })();
 </script>
 
