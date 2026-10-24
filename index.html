@@ -23,7 +23,7 @@
     /></noscript>
     <!-- End Meta Pixel Code -->
 
-    <!-- Font Awesome (free) for icons (optional, but clean) -->
+    <!-- Font Awesome (free) for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -61,7 +61,7 @@
             z-index: 2;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 1.5rem 1.25rem 2.5rem;
+            padding: 1rem 1.25rem 2rem;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -72,16 +72,16 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding-bottom: 1.5rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 2rem;
+            margin-bottom: 1.25rem;
             flex-wrap: wrap;
         }
 
         .logo-img {
-            width: 64px;
-            height: 64px;
-            border-radius: 18px;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
             object-fit: cover;
             border: 2px solid rgba(255, 215, 0, 0.5);
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
@@ -89,7 +89,7 @@
         }
 
         .brand h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             background: linear-gradient(135deg, #ffffff, #b0c4ff);
@@ -100,13 +100,13 @@
         }
 
         .brand .tagline {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #8b9bb5;
             letter-spacing: 0.3px;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-top: 0.2rem;
+            margin-top: 0.15rem;
         }
 
         .tagline i {
@@ -114,53 +114,14 @@
             font-size: 0.7rem;
         }
 
-        /* hero section */
-        .hero {
+        /* ---------- TOP CTA BAR (button above the fold) ---------- */
+        .cta-top {
             display: flex;
-            flex-wrap: wrap;
-            gap: 2.5rem;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 3rem;
+            justify-content: center;
+            margin: 0.25rem 0 1.25rem;
         }
 
-        .hero-content {
-            flex: 1 1 300px;
-        }
-
-        .hero-content .badge {
-            display: inline-block;
-            background: rgba(0, 180, 255, 0.15);
-            color: #7bc9ff;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            letter-spacing: 0.3px;
-            border: 1px solid rgba(0, 180, 255, 0.2);
-            margin-bottom: 1.25rem;
-        }
-
-        .hero-content h2 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #ffffff, #c7d9ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-content p {
-            font-size: 1.1rem;
-            color: #a8b9d4;
-            max-width: 500px;
-            margin-bottom: 2rem;
-        }
-
-        /* blink button (the star) */
+        /* blink button (the star) — now front & center */
         .tg-btn {
             display: inline-flex;
             align-items: center;
@@ -169,8 +130,8 @@
             background: #0088cc;
             color: #fff;
             font-weight: 700;
-            font-size: 1.25rem;
-            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            padding: 0.9rem 2.2rem;
             border-radius: 60px;
             text-decoration: none;
             letter-spacing: 0.5px;
@@ -180,13 +141,14 @@
             animation: blinkPulse 1.6s infinite ease-in-out;
             cursor: pointer;
             width: fit-content;
+            max-width: 100%;
         }
 
         .tg-btn i {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
 
-        /* blinking animation — subtle pulse + glow (not annoying, but visible) */
+        /* blinking animation */
         @keyframes blinkPulse {
             0% {
                 opacity: 1;
@@ -211,8 +173,54 @@
         .tg-btn:hover {
             background: #0099e6;
             transform: scale(1.03);
-            animation-play-state: paused; /* pause blink on hover for readability */
+            animation-play-state: paused;
             box-shadow: 0 16px 36px -8px #00a6ff;
+        }
+
+        /* hero section */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .hero-content {
+            flex: 1 1 300px;
+        }
+
+        .hero-content .badge {
+            display: inline-block;
+            background: rgba(0, 180, 255, 0.15);
+            color: #7bc9ff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.9rem;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(0, 180, 255, 0.2);
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.85rem;
+            background: linear-gradient(to right, #ffffff, #c7d9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            color: #a8b9d4;
+            max-width: 500px;
+            margin-bottom: 0;
         }
 
         /* right side visual / stats card */
@@ -221,42 +229,43 @@
             background: rgba(18, 24, 36, 0.8);
             backdrop-filter: blur(6px);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 32px;
-            padding: 1.8rem 1.8rem;
+            border-radius: 28px;
+            padding: 1.5rem 1.6rem;
             box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.8);
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
+            gap: 1rem;
             min-width: 240px;
         }
 
         .stat-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.9rem;
         }
 
         .stat-icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             background: rgba(0, 180, 255, 0.08);
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #5eb8ff;
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             border: 1px solid rgba(0, 180, 255, 0.2);
+            flex-shrink: 0;
         }
 
         .stat-text h4 {
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #fff;
         }
 
         .stat-text p {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #8b9bb5;
         }
 
@@ -264,16 +273,16 @@
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-            margin-bottom: 3rem;
+            gap: 1.2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 2rem;
         }
 
         .feature-card {
             background: rgba(20, 28, 40, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 24px;
-            padding: 1.5rem 1.2rem;
+            border-radius: 22px;
+            padding: 1.35rem 1.1rem;
             backdrop-filter: blur(4px);
             transition: border-color 0.2s;
         }
@@ -283,30 +292,30 @@
         }
 
         .feature-card i {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: #f0b90b;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .feature-card h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
             color: #fff;
         }
 
         .feature-card p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #9aabc2;
         }
 
         /* footer */
         .footer {
             margin-top: auto;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: #5e6f88;
             display: flex;
             flex-direction: column;
@@ -323,29 +332,100 @@
         }
 
         .disclaimer {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: #4b5a70;
             max-width: 600px;
             margin: 0.25rem auto 0;
             line-height: 1.5;
         }
 
+        /* ---------- SIDE FLOATING "POWERED BY KARAN AGENCY" BUTTON ---------- */
+        .agency-float {
+            position: fixed;
+            right: 14px;
+            bottom: 18px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(10, 14, 22, 0.92);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(240, 185, 11, 0.4);
+            border-radius: 60px;
+            padding: 8px 16px 8px 12px;
+            text-decoration: none;
+            color: #f0b90b;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(240, 185, 11, 0.1);
+            transition: all 0.25s ease;
+            animation: agencyGlow 2.4s infinite ease-in-out;
+        }
+
+        .agency-float i {
+            font-size: 0.95rem;
+            color: #f0b90b;
+        }
+
+        .agency-float:hover {
+            background: rgba(25, 32, 46, 0.98);
+            border-color: rgba(240, 185, 11, 0.8);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.9), 0 0 0 2px rgba(240, 185, 11, 0.2);
+            color: #ffd233;
+        }
+
+        @keyframes agencyGlow {
+            0%, 100% {
+                box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(240, 185, 11, 0.15);
+            }
+            50% {
+                box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.8), 0 0 0 4px rgba(240, 185, 11, 0.08);
+            }
+        }
+
+        .agency-float .divider {
+            width: 1px;
+            height: 16px;
+            background: rgba(240, 185, 11, 0.25);
+        }
+
+        .agency-float .agency-label {
+            color: #c9d4e6;
+            font-weight: 500;
+            font-size: 0.7rem;
+            line-height: 1.1;
+        }
+
+        .agency-float .agency-name {
+            color: #f0b90b;
+            font-weight: 700;
+            font-size: 0.75rem;
+            line-height: 1.1;
+        }
+
         /* responsive */
         @media (max-width: 700px) {
             .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.6rem;
             }
             .brand h1 {
-                font-size: 1.7rem;
+                font-size: 1.45rem;
+            }
+            .logo-img {
+                width: 46px;
+                height: 46px;
+                border-radius: 12px;
             }
             .hero-content h2 {
-                font-size: 2rem;
+                font-size: 1.7rem;
             }
             .tg-btn {
-                font-size: 1.1rem;
-                padding: 0.9rem 1.8rem;
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
                 width: 100%;
                 justify-content: center;
             }
@@ -354,6 +434,21 @@
             }
             .hero-stats {
                 width: 100%;
+            }
+            .agency-float {
+                right: 10px;
+                bottom: 12px;
+                padding: 6px 12px 6px 10px;
+                font-size: 0.7rem;
+            }
+            .agency-float .agency-label {
+                font-size: 0.62rem;
+            }
+            .agency-float .agency-name {
+                font-size: 0.68rem;
+            }
+            .container {
+                padding-bottom: 4.5rem; /* avoid overlap with floating agency button */
             }
         }
 
@@ -378,16 +473,19 @@
             </div>
         </header>
 
-        <!-- HERO section with call to action -->
+        <!-- ★ MAIN TELEGRAM BUTTON — now right at the top, above the fold, no scrolling needed ★ -->
+        <div class="cta-top">
+            <a href="https://t.me/+wEgamWJVYXhjMzZl" class="tg-btn" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-telegram-plane"></i> Join Telegram Channel
+            </a>
+        </div>
+
+        <!-- HERO section -->
         <section class="hero">
             <div class="hero-content">
                 <span class="badge"><i class="fas fa-bolt" style="margin-right: 6px;"></i> LIVE MARKET INSIGHTS</span>
                 <h2>Smart stock analysis, <br>simplified for you.</h2>
                 <p>Join the Telegram channel for real‑time analysis, trade setups, and deep dives into market trends — curated by Pankaj Bhardwaj.</p>
-                <!-- BLINKING TELEGRAM BUTTON -->
-                <a href="https://t.me/+wEgamWJVYXhjMzZl" class="tg-btn" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-telegram-plane"></i> Join Telegram Channel
-                </a>
             </div>
             <div class="hero-stats">
                 <div class="stat-item">
@@ -444,7 +542,17 @@
         </footer>
     </div>
 
-    <!-- Extra pixel safety: the required <noscript> pixel is already included in the head. 
-         No extra pixel is needed, we keep the exact one in <head>. -->
+    <!-- ★ FLOATING SIDE "POWERED BY KARAN AGENCY" BUTTON ★ -->
+    <a href="https://t.me/+txl1RbesgdE3ODg1" class="agency-float" target="_blank" rel="noopener noreferrer" aria-label="Powered by Karan Agency — open Telegram">
+        <i class="fas fa-bolt"></i>
+        <div style="display:flex; flex-direction:column; text-align:left;">
+            <span class="agency-label">Powered by</span>
+            <span class="agency-name">KARAN AGENCY</span>
+        </div>
+        <span class="divider"></span>
+        <i class="fab fa-telegram-plane" style="font-size:0.85rem; opacity:0.9;"></i>
+    </a>
+
+    <!-- The required Meta Pixel <noscript> is already in the head. No extra pixel needed. -->
 </body>
 </html>
